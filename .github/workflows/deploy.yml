@@ -1,0 +1,54 @@
+name: Deploy Trader Admin Website
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+
+    - name: Install dependencies
+      run: yarn
+
+    - name: Build project
+      run: yarn build
+      env:
+        VITE_API_URL: http://api.ljaym.com/api
+
+    - name: Archive production files
+      run: tar -czf trader-admin.tar.gz dist package.json yarn.lock
+
+    - name: Add SSH Host Key
+      run: |
+        mkdir -p ~/.ssh
+        chmod 700 ~/.ssh
+        ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+
+    - name: Deploy to Alibaba Cloud
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        SERVER_HOST: ${{ secrets.SERVER_HOST }}
+        SERVER_USER: ${{ secrets.SERVER_USER }}
+        APP_DIR: ${{ secrets.APP_DIR }}
+      run: |
+        echo "$SSH_PRIVATE_KEY" > private_key
+        chmod 600 private_key
+        scp -i private_key trader-admin.tar.gz $SERVER_USER@$SERVER_HOST:$APP_DIR
+        ssh -i private_key $SERVER_USER@$SERVER_HOST << EOF
+        cd $APP_DIR
+        tar --overwrite -xzf trader-admin.tar.gz
+        yarn install --production
+        pm2 delete "trader-admin" || true
+        pm2 serve dist 3011 --name "trader-admin" --spa
+        EOF 

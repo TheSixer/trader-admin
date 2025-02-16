@@ -1,0 +1,32 @@
+.markdown-content {
+  padding: 16px;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.markdown-content img {
+  max-width: 100%;
+  height: auto;
+}
+
+.markdown-content pre {
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+.markdown-content table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.markdown-content th,
+.markdown-content td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.markdown-content th {
+  background-color: #f5f5f5;
+} 

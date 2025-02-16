@@ -1,0 +1,16 @@
+.truncated-text {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tag-chip {
+  margin: 2px;
+  font-size: 12px;
+}
+
+.category-chip {
+  background-color: #e0e0e0;
+  color: #666;
+} 
