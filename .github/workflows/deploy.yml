@@ -51,7 +51,9 @@ jobs:
         # 远程 SSH 执行部署脚本
         ssh -i private_key $SERVER_USER@$SERVER_HOST << 'EOF'
         set -e  # 遇到错误就退出
-        cd $APP_DIR
+        echo "🔍 Checking server directory... $(pwd)"
+        cd $APP_DIR || { echo "❌ cd $APP_DIR failed!"; exit 1; }
+        echo "✅ Current directory: $(pwd)"
 
         echo "📦 Extracting files..."
         tar --overwrite -xzf trader-admin.tar.gz
