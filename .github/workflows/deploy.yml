@@ -56,10 +56,9 @@ jobs:
         echo "📦 Extracting files..."
         tar --overwrite -xzf trader-admin.tar.gz
 
-        # 加载 `nvm` 并切换到 Node.js 20
+        # 加载 nvm 并切换到 Node.js 20
         export NVM_DIR="$HOME/.nvm"
         [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-        nvm install 20
         nvm use 20
 
         # 确保 yarn 使用正确的 Node.js 版本
