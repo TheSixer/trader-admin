@@ -16,7 +16,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '18'  # GitHub Actions 运行环境（本地 CI）
+        node-version: '20'  # GitHub Actions 运行环境（本地 CI）
 
     - name: Install dependencies
       run: yarn
