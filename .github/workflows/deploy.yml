@@ -16,7 +16,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '18'
+        node-version: '18'  # GitHub Actions 运行环境（本地 CI）
 
     - name: Install dependencies
       run: yarn
@@ -44,11 +44,32 @@ jobs:
       run: |
         echo "$SSH_PRIVATE_KEY" > private_key
         chmod 600 private_key
+
+        # 上传文件到服务器
         scp -i private_key trader-admin.tar.gz $SERVER_USER@$SERVER_HOST:$APP_DIR
-        ssh -i private_key $SERVER_USER@$SERVER_HOST << EOF
+
+        # 远程 SSH 执行部署脚本
+        ssh -i private_key $SERVER_USER@$SERVER_HOST << 'EOF'
+        set -e  # 遇到错误就退出
         cd $APP_DIR
+
+        echo "📦 Extracting files..."
         tar --overwrite -xzf trader-admin.tar.gz
+
+        # 加载 `nvm` 并切换到 Node.js 20
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+        nvm install 20
+        nvm use 20
+
+        # 确保 yarn 使用正确的 Node.js 版本
+        echo "🛠 Installing dependencies using Node $(node -v)"
         yarn install --production
+
+        # 启动 PM2 运行前端应用
+        echo "🚀 Restarting Trader Admin Website with PM2..."
         pm2 delete "trader-admin" || true
         pm2 serve dist 3011 --name "trader-admin" --spa
-        EOF 
+
+        echo "✅ Deployment completed successfully!"
+        EOF
