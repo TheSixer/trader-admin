@@ -16,7 +16,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '20'  # GitHub Actions 运行环境（本地 CI）
+        node-version: '20'
 
     - name: Install dependencies
       run: yarn
@@ -27,7 +27,7 @@ jobs:
         VITE_API_URL: http://api.ljaym.com/api
 
     - name: Archive production files
-      run: tar -czf trader-admin.tar.gz dist package.json yarn.lock
+      run: tar -czf trader-admin.tar.gz dist
 
     - name: Add SSH Host Key
       run: |
@@ -52,20 +52,6 @@ jobs:
 
         echo "📦 Extracting files..."
         tar --overwrite -xzf trader-admin.tar.gz
-
-        # 加载 nvm 并切换到 Node.js 20
-        export NVM_DIR="$HOME/.nvm"
-        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-        nvm use 20
-
-        # 确保 yarn 使用正确的 Node.js 版本
-        echo "🛠 Installing dependencies using Node $(node -v)"
-        yarn install --production
-
-        # 启动 PM2 运行前端应用
-        echo "🚀 Restarting Trader Admin Website with PM2..."
-        pm2 delete "trader-admin" || true
-        pm2 serve dist 3011 --name "trader-admin" --spa
 
         echo "✅ Deployment completed successfully!"
         EOF
