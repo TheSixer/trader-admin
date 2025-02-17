@@ -1,14 +1,15 @@
-import { Edit, SimpleForm, TextInput, required, ReferenceInput, SelectInput } from "react-admin";
+import { Edit, SimpleForm, TextInput, required, ReferenceInput, SelectInput, BooleanInput, ImageInput, ImageField } from "react-admin";
 import { MarkdownInput } from "./MarkdownInput";
 import { TagInput } from "./TagInput";
+import { CoverImageInput } from "./CoverImageInput";
 
 export const PostEdit = () => (
   <Edit
     transform={(data) => ({
-      title: data.title,
-      content: data.content,
-      category_id: data.category_id,
-      tags: data.tags || [],  // 确保标签数据被传递到后端
+      ...data,
+      tags: data.tags || [],
+      is_recommended: data.is_recommended || false,
+      is_top: data.is_top || false,
     })}
   >
     <SimpleForm>
@@ -25,6 +26,9 @@ export const PostEdit = () => (
         source="tags"
         label="标签"
       />
+      <CoverImageInput source="cover_image" label="封面图片" />
+      <BooleanInput source="is_recommended" label="推荐文章" />
+      <BooleanInput source="is_top" label="置顶文章" />
       <MarkdownInput 
         source="content" 
         validate={[required()]} 

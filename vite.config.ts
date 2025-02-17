@@ -39,11 +39,14 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react()],
     server: {
-      port: 3011,
+      port: 9527,
     },
     build: {
       outDir: 'dist',
       sourcemap: false,
+    },
+    css: {
+      postcss: './postcss.config.js',
     },
     define: {
       'import.meta.env.VITE_API_URL': JSON.stringify(env.VITE_API_URL),

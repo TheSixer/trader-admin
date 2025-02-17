@@ -29,6 +29,9 @@ export interface IArticle extends BaseModel {
   views: number;
   likes: number;
   tags: string[];
+  is_recommended: boolean;
+  is_top: boolean;
+  cover_image: string | null;
   username?: string;
   category_name?: string;
   comment_count?: number;
