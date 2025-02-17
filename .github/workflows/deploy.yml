@@ -22,9 +22,9 @@ jobs:
       run: yarn
 
     - name: Build project
-      run: yarn build
+      run: yarn build --mode production
       env:
-        VITE_API_URL: http://api.ljaym.com/api
+        VITE_API_URL: https://api.ljaym.com/api
 
     - name: Archive production files
       run: tar -czf trader-admin.tar.gz dist

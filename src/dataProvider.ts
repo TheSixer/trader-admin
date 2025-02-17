@@ -1,7 +1,8 @@
 import { DataProvider, fetchUtils } from 'react-admin';
 import { stringify } from 'query-string';
 
-const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3010/api';
+const apiUrl = import.meta.env.VITE_API_URL;
+console.log('Current API URL:', apiUrl); // 添加日志以便调试
 
 const resourceMap: { [key: string]: string } = {
     posts: 'posts',

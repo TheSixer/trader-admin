@@ -34,7 +34,7 @@ const alias = [
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd());
+  const env = loadEnv(mode, process.cwd(), '');
 
   return {
     plugins: [react()],
@@ -46,7 +46,7 @@ export default defineConfig(({ mode }) => {
       sourcemap: false,
     },
     define: {
-      'process.env.VITE_API_URL': JSON.stringify(env.VITE_API_URL),
+      'import.meta.env.VITE_API_URL': JSON.stringify(env.VITE_API_URL),
     },
     resolve: { alias },
     base: "./",
