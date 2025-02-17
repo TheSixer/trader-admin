@@ -1,6 +1,6 @@
 import { AuthProvider } from 'react-admin';
 
-const apiUrl = 'http://localhost:3010/api';
+const apiUrl = import.meta.env.VITE_API_URL;
 
 /**
  * This authProvider is only for test purposes. Don't use it in production.
