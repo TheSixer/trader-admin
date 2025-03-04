@@ -3,7 +3,9 @@ import {
   Article as ArticleIcon,
   Comment as CommentIcon,
   Category as CategoryIcon,
-  Person as UserIcon
+  Person as UserIcon,
+  QuestionMark as QuestionMarkIcon,
+  PersonPin as PersonPinIcon
 } from '@mui/icons-material';
 
 export const Menu = () => {
@@ -12,6 +14,16 @@ export const Menu = () => {
   return (
     <RaMenu>
       <MenuItemLink 
+        to="/customers"
+        primaryText="客户管理"
+        leftIcon={<PersonPinIcon   />}
+      />
+      <MenuItemLink 
+        to="/survey/questions"
+        primaryText="问卷管理"
+        leftIcon={<QuestionMarkIcon />}
+      />
+      {/* <MenuItemLink 
         to="/posts"
         primaryText="文章管理"
         leftIcon={<ArticleIcon />}
@@ -25,11 +37,11 @@ export const Menu = () => {
         to="/categories"
         primaryText="分类管理"
         leftIcon={<CategoryIcon />}
-      />
+      /> */}
       {permissions === 'admin' && (
         <MenuItemLink 
           to="/users"
-          primaryText="用户管理"
+          primaryText="系统用户管理"
           leftIcon={<UserIcon />}
         />
       )}

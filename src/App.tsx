@@ -14,6 +14,11 @@ import { CategoryEdit } from "./components/categories/CategoryEdit";
 import { CategoryCreate } from "./components/categories/CategoryCreate";
 import { usePermissions } from "react-admin";
 import { CommentList } from "./components/comments/CommentList";
+import { CustomerList } from "./components/customers/CustomerList";
+import { CustomerEdit } from "./components/customers/CustomerEdit";
+import { QuestionList } from "./components/surveys/QuestionList";
+import { QuestionCreate } from "./components/surveys/QuestionCreate";
+import { QuestionEdit } from "./components/surveys/QuestionEdit";
 
 const AdminOnlyCategoryEdit = (props: EditProps) => {
   const { permissions } = usePermissions();
@@ -60,6 +65,17 @@ export const App = () => (
       list={UserList}
       edit={AdminOnlyUserEdit}
       create={AdminOnlyUserCreate}
+    />
+    <Resource
+      name="customers"
+      list={CustomerList}
+      edit={CustomerEdit}
+    />
+    <Resource
+      name="survey/questions"
+      list={QuestionList}
+      create={QuestionCreate}
+      edit={QuestionEdit}
     />
   </Admin>
 );

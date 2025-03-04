@@ -123,7 +123,7 @@ export const dataProvider: DataProvider = {
 
     // 自定义方法
     approveUser: async (userId: string, status: 'approved' | 'rejected') => {
-        const { json } = await httpClient(`${apiUrl}/auth/approve/${userId}`, {
+        const { json } = await httpClient(`${apiUrl}/admin/auth/approve/${userId}`, {
             method: 'PUT',
             body: JSON.stringify({ status }),
         });

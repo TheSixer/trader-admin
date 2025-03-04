@@ -50,4 +50,28 @@ export interface IComment extends BaseModel {
   article_id: number;
   parent_id: number | null;
   username?: string;
+}
+
+export interface ISurveyQuestionOption {
+  id: number;
+  content: string;
+  sort_order?: number;
+}
+
+export interface ISurveyQuestion extends BaseModel {
+  title: string;
+  type: 'single' | 'multiple' | 'text';
+  is_required: boolean;
+  sort_order: number;
+  options?: ISurveyQuestionOption[];
+}
+
+export interface ISurveyResponse extends BaseModel {
+  id: number;
+  question_id: number;
+  question_title: string;
+  question_type: 'single' | 'multiple' | 'text';
+  response_text: string | null;
+  selected_option_ids: string | null;
+  selected_options?: ISurveyQuestionOption[];
 } 
