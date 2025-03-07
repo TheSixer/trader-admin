@@ -23,7 +23,8 @@ const httpClient = (url: string, options: any = {}) => {
     return fetchUtils.fetchJson(url, options);
 };
 
-export const dataProvider: DataProvider = {
+// 创建一个基础 dataProvider 对象
+const baseDataProvider: DataProvider = {
     getList: async (resource, params) => {
         const { page, perPage } = params.pagination || { page: 1, perPage: 10 };
         const { filter } = params;
@@ -155,6 +156,7 @@ export const dataProvider: DataProvider = {
     },
 };
 
+// 扩展 dataProvider
 export interface MyDataProvider extends DataProvider {
     approveUser: (userId: string, status: 'approved' | 'rejected') => Promise<unknown>;
     incrementViews: (articleId: string) => Promise<unknown>;
@@ -162,4 +164,45 @@ export interface MyDataProvider extends DataProvider {
     uploadImage: (file: File) => Promise<unknown>;
 }
 
-export default dataProvider;
+// 使用增强版 dataProvider 并导出
+export const dataProvider: MyDataProvider = {
+    ...baseDataProvider,
+    getOne: (resource, params) => {
+        // 保持原有的特殊处理
+        if (resource === 'survey/reports') {
+            console.log('获取报告详情', params.id);
+            
+            return fetchUtils.fetchJson(
+                `${apiUrl}/survey/reports/${params.id}`,
+                {
+                    headers: new Headers({
+                        Accept: 'application/json',
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }),
+                }
+            )
+            .then(({ json }) => ({
+                data: json,
+            }))
+            .catch(error => {
+                console.error('获取报告详情失败', error);
+                throw error;
+            });
+        }
+        
+        return baseDataProvider.getOne(resource, params);
+    },
+    // 添加其他自定义方法
+    approveUser: async (userId, status) => {
+        // 保持原有实现
+    },
+    incrementViews: async (articleId) => {
+        // 保持原有实现
+    },
+    likeArticle: async (articleId) => {
+        // 保持原有实现
+    },
+    uploadImage: async (file) => {
+        // 保持原有实现
+    }
+};

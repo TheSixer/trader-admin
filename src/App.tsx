@@ -19,6 +19,8 @@ import { CustomerEdit } from "./components/customers/CustomerEdit";
 import { QuestionList } from "./components/surveys/QuestionList";
 import { QuestionCreate } from "./components/surveys/QuestionCreate";
 import { QuestionEdit } from "./components/surveys/QuestionEdit";
+import { ReportList, ReportShow } from './components/reports';
+import AssessmentIcon from '@mui/icons-material/Assessment';
 
 const AdminOnlyCategoryEdit = (props: EditProps) => {
   const { permissions } = usePermissions();
@@ -76,6 +78,12 @@ export const App = () => (
       list={QuestionList}
       create={QuestionCreate}
       edit={QuestionEdit}
+    />
+    <Resource
+      name="survey/reports"
+      list={ReportList}
+      show={ReportShow}
+      icon={AssessmentIcon}
     />
   </Admin>
 );

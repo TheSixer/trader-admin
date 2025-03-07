@@ -5,7 +5,8 @@ import {
   Category as CategoryIcon,
   Person as UserIcon,
   QuestionMark as QuestionMarkIcon,
-  PersonPin as PersonPinIcon
+  PersonPin as PersonPinIcon,
+  Assessment as AssessmentIcon
 } from '@mui/icons-material';
 
 export const Menu = () => {
@@ -16,12 +17,17 @@ export const Menu = () => {
       <MenuItemLink 
         to="/customers"
         primaryText="客户管理"
-        leftIcon={<PersonPinIcon   />}
+        leftIcon={<PersonPinIcon />}
       />
       <MenuItemLink 
         to="/survey/questions"
         primaryText="问卷管理"
         leftIcon={<QuestionMarkIcon />}
+      />
+      <MenuItemLink 
+        to="/survey/reports"
+        primaryText="报告管理"
+        leftIcon={<AssessmentIcon />}
       />
       {/* <MenuItemLink 
         to="/posts"
