@@ -24,7 +24,7 @@ jobs:
     - name: Build project
       run: yarn build --mode production
       env:
-        VITE_API_URL: https://api.ljaym.com/api
+        VITE_API_URL: https://api.tmlabs.ai/api
 
     - name: Archive production files
       run: tar -czf trader-admin.tar.gz dist
